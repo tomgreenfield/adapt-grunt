@@ -524,26 +524,16 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('server', '', function(moduleID) {
-        if(!moduleID) {
-            moduleID = config.modules[0];
-            grunt.log.writeln('No module specified, running ' + moduleID);
-        }
-        if(!checkValidMod(moduleID)) return;
+    grunt.registerTask('server', '', function(moduleID, spoor) {
+        if(!moduleID) grunt.fail.fatal("No module specified...");
+        if(!checkValidMod(moduleID)) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
 
         grunt.option("moduleID", moduleID);
-        grunt.task.run('concurrent:server');
+        grunt.task.run('concurrent:' + (spoor === true) ? 'spoor' : 'server');
     });
 
     grunt.registerTask('server-scorm', '', function(moduleID) {
-        if(!moduleID) {
-            moduleID = config.modules[0];
-            grunt.log.writeln('No module specified, running ' + moduleID);
-        }
-        if(!checkValidMod(moduleID)) return;
-
-        grunt.option("moduleID", moduleID);
-        grunt.task.run('concurrent:spoor');
+        grunt.task.run('server:' + moduleID + ':true');
     });
 
     function checkValidMod(id) {
