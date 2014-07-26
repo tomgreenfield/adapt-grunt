@@ -501,7 +501,7 @@ module.exports = function(grunt) {
         var buildProcessRelease = ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config'];
         var buildProcessDev = ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config'];
 
-        grunt.task.run((devMode === true) ? buildProcessDev : buildProcessRelease);
+        grunt.task.run((!!devMode === true) ? buildProcessDev : buildProcessRelease);
     });
 
     grunt.registerTask('build', '', function(moduleID, devMode) {
@@ -529,7 +529,8 @@ module.exports = function(grunt) {
         if(!checkValidMod(moduleID)) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
 
         grunt.option("moduleID", moduleID);
-        grunt.task.run('concurrent:' + (spoor === true) ? 'spoor' : 'server');
+
+        grunt.task.run('concurrent:' + ((!!spoor === true) ? 'spoor' : 'server'));
     });
 
     grunt.registerTask('server-scorm', '', function(moduleID) {
