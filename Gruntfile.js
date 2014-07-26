@@ -484,11 +484,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('_build', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID, devMode) {
-        // check we're good to go
-        if(!checkValidMod(moduleID)) {
-            grunt.fail.warn("'" + moduleID + "' not specified in grunt_config.json. Try again...");
-            return;
-        }
+        if(!checkValidMod(moduleID)) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
 
         // use custom or default theme depending on grunt_config
         var customTheme = config.themes.custom[moduleID];
