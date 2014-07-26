@@ -343,14 +343,6 @@ module.exports = function(grunt) {
         },
     });
 
-    /*grunt.registerTask('watch', 'Task has been deprecated', function() {
-        grunt.log.writeln();
-        grunt.log.error("The watch task has been deprecated, please use dev or devmod:[id] instead.");
-        grunt.log.writeln();
-        grunt.log.writeln("For more details on what commands are available, check:");
-        grunt.log.writeln("https://git.kineo.com/adapt/grunt-build-process/blob/master/README.md");
-    });*/
-
     grunt.loadNpmTasks('grunt-contrib-concat');
 
     // This is a simple function to take the course's config.json and append the theme.json
@@ -534,6 +526,20 @@ module.exports = function(grunt) {
         }
     });
 
+    grunt.registerTask('listen', '', function(moduleID) {
+        if(!moduleID) grunt.fail.fatal("No module specified...");
+        if(!checkValidMod(moduleID)) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
+
+        // use custom or default theme depending on grunt_config
+        var customTheme = config.themes.custom[moduleID];
+        var theme = (customTheme) ? customTheme : config.themes.default;
+
+        grunt.option("moduleID", moduleID);
+        grunt.option("theme", theme);
+
+        grunt.task.run('watch');
+    });
+
     grunt.registerTask('server', '', function(moduleID, spoor) {
         if(!moduleID) grunt.fail.fatal("No module specified...");
         if(!checkValidMod(moduleID)) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
@@ -573,6 +579,7 @@ module.exports = function(grunt) {
         writeln('');
         writeTask('build', '', ':mod', 'Builds a production ready/minified version of the specified module. If no module ID is specified, all modules are built.');
         writeTask('dev', '', ':mod', 'Creates a developer-friendly version of the specified module (including source maps). If no module ID is specified, all modules are built.');
+        writeTask('listen', ':mod', '', 'Listens for changes to any files associated with the specified module, then performs the necessary actions to update the build.');
         writeTask('tracking-insert', '', ':mod', 'Inserts tracking identifiers (used in conjunction with SCORM). If no module ID is specified, tracking IDs are added for all modules.');
         writeTask('server', ':mod', '', 'Launches a stand-alone Node.JS web server and opens the specified course in your default web browser.');
         writeTask('server-scorm', ':mod', '', 'Same as server, but emulates a SCORM server to test the tracking of learner progress.');
