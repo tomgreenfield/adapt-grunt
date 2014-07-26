@@ -478,9 +478,19 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
     grunt.loadNpmTasks('grunt-jsonlint');
 
-    grunt.registerTask('tracking-insert', '', function(moduleID) {
+    grunt.registerTask('_tracking-insert', '', function(moduleID) {
         grunt.option("moduleID", moduleID);
         grunt.task.run('adapt_insert_tracking_ids');
+    });
+
+    grunt.registerTask('tracking-insert', '', function(moduleID) {
+        if(moduleID) {
+            grunt.task.run('_tracking-insert:' + moduleID);
+        }
+        else {
+            var mods = config.modules;
+            for (var i = 0; i < mods.length; i++) grunt.task.run('_tracking-insert:' + mods[i]);
+        }
     });
 
     grunt.registerTask('_build', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID, devMode) {
