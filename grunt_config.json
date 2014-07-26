@@ -1,0 +1,13 @@
+{
+  "modules": [
+  	"m05",
+  	"m10",
+  	"m15"
+  ],
+  "themes": {
+  	"default":"adapt-contrib-vanilla",
+  	"custom": {
+  		"m15":"adapt-contrib-vanilla-alt"
+  	}
+  }
+}
