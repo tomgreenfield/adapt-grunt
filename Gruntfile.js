@@ -504,9 +504,9 @@ module.exports = function(grunt) {
         grunt.option("theme", theme);
 
         // log out some info...
-        grunt.log.writeln();
-        grunt.log.writeln("Building module '" + grunt.option("moduleID") + "' dev: " + devMode);
-        grunt.log.writeln("Using theme '" + grunt.option("theme") + "'");
+        writeln();
+        writeln("Building module '" + grunt.option("moduleID") + "' dev: " + devMode);
+        writeln("Using theme '" + grunt.option("theme") + "'");
 
         var buildProcessRelease = ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config'];
         var buildProcessDev = ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config'];
@@ -558,4 +558,29 @@ module.exports = function(grunt) {
         }
         return exists;
     };
+
+    // shorthand, wraps text
+    function writeln(msg) { grunt.log.writeln(grunt.log.wraptext(80, msg)); }
+
+    var colors = ['white', 'black', 'grey', 'blue', 'cyan', 'green', 'magenta', 'red', 'yellow', 'rainbow'];
+
+    grunt.registerTask('default', '', function(moduleID) {
+        var width = 80;
+        writeln('');
+        grunt.log.ok('No task specified. See below for a list of available tasks.');
+        writeln('');
+        writeln('Note: tasks are listed in green, mandatory parameters are in red, and optional parameters are in blue.'.bold);
+        writeln('');
+        writeTask('build', '', ':mod', 'Builds a production ready/minified version of the specified module. If no module ID is specified, all modules are built.');
+        writeTask('dev', '', ':mod', 'Creates a developer-friendly version of the specified module (including source maps). If no module ID is specified, all modules are built.');
+        writeTask('tracking-insert', '', ':mod', 'Inserts tracking identifiers (used in conjunction with SCORM). If no module ID is specified, tracking IDs are added for all modules.');
+        writeTask('server', ':mod', '', 'Launches a stand-alone Node.JS web server and opens the specified course in your default web browser.');
+        writeTask('server-scorm', ':mod', '', 'Same as server, but emulates a SCORM server to test the tracking of learner progress.');
+
+        function writeTask(name, mandParams, optParams, description) {
+            writeln(name['green'].bold + mandParams['red'] + optParams['blue']);
+            writeln(description);
+            writeln('');
+        }
+    });
 };
