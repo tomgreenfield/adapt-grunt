@@ -18,6 +18,10 @@ module.exports = function(grunt) {
                 src: [ 'src/courses/<%= grunt.option("moduleID") %>/**/*.json' ]
             }
         },
+        
+        clean: {
+			build: ['builds/<%= grunt.option("moduleID") %>/**']
+		},
 
         copy: {
             index: {
@@ -469,6 +473,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
     grunt.loadNpmTasks('grunt-jsonlint');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.registerTask('_tracking-insert', '', function(moduleID) {
         grunt.option("moduleID", moduleID);
@@ -500,8 +505,8 @@ module.exports = function(grunt) {
         writeln("Building module '" + grunt.option("moduleID") + "' dev: " + devMode);
         writeln("Using theme '" + grunt.option("theme") + "'");
 
-        var buildProcessRelease = ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config'];
-        var buildProcessDev = ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config'];
+        var buildProcessRelease = ['jsonlint', 'check-json', 'clean', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config'];
+        var buildProcessDev = ['jsonlint', 'check-json', 'clean', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config'];
 
         grunt.task.run((!!devMode === true) ? buildProcessDev : buildProcessRelease);
     });
