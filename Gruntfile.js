@@ -82,14 +82,14 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         flatten: true,
-                        src: ['src/theme/<%= grunt.option("theme") %>/**/fonts/**'],
+                        src: ['src/theme/<%= grunt.option("theme") %>/fonts/**'],
                         dest: 'builds/<%= grunt.option("moduleID") %>/adapt/css/fonts/',
                         filter: 'isFile'
                     },
                     {
                         expand: true,
                         flatten: true,
-                        src: ['src/theme/<%= grunt.option("theme") %>/**/assets/**'],
+                        src: ['src/theme/<%= grunt.option("theme") %>/assets/**'],
                         dest: 'builds/<%= grunt.option("moduleID") %>/adapt/css/assets/',
                         filter: 'isFile'
                     },
@@ -285,8 +285,8 @@ module.exports = function(grunt) {
             },
             assets: {
                 files: [
-                    'src/theme/<%= grunt.option("theme") %>/**/fonts/**',
-                    'src/theme/<%= grunt.option("theme") %>/**/assets/**',
+                    'src/theme/<%= grunt.option("theme") %>/fonts/**',
+                    'src/theme/<%= grunt.option("theme") %>/assets/**',
                     'src/components/**/assets/**'
                 ],
                 tasks: ['copy:main'],
