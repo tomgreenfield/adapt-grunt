@@ -118,7 +118,7 @@ module.exports = function(grunt) {
                     'src/menu/**/*.less',
                     'src/components/**/*.less',
                     'src/extensions/**/*.less',
-                    'src/theme/<%= grunt.option("theme") %>/**/*.less'
+                    'src/theme/<%= grunt.option("theme") %>/less/*.less'
                 ],
                 dest: 'src/less/adapt.less'
             }
@@ -508,21 +508,21 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', '', function(moduleID, devMode) {
         if(moduleID) {
-            grunt.task.run('_build:' + moduleID + ':' + devMode);
+            grunt.task.run('_build:' + moduleID + ':false');
         }
         else {
             var mods = config.modules;
-            for (var i = 0; i < mods.length; i++) grunt.task.run('_build:' + mods[i] + ':' + devMode);
+            for (var i = 0; i < mods.length; i++) grunt.task.run('_build:' + mods[i] + ':false');
         }
     });
 
     grunt.registerTask('dev', '', function(moduleID) {
         if(moduleID) {
-            grunt.task.run(['build:' + moduleID + ":true", "watch"]);
+            grunt.task.run(['_build:' + moduleID + ":true", "watch"]);
         }
         else {
             var mods = config.modules;
-            for (var i = 0; i < mods.length; i++) grunt.task.run('build:' + mods[i] + ":true");
+            for (var i = 0; i < mods.length; i++) grunt.task.run('_build:' + mods[i] + ":true");
         }
     });
 
