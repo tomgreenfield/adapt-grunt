@@ -496,7 +496,7 @@ module.exports = function(grunt) {
         grunt.option("theme", theme);
 
         // log out some info...
-        writeln();
+        writeln(“”);
         writeln("Building module '" + grunt.option("moduleID") + "' dev: " + devMode);
         writeln("Using theme '" + grunt.option("theme") + "'");
 
