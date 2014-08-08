@@ -18,10 +18,10 @@ module.exports = function(grunt) {
                 src: [ 'src/courses/<%= grunt.option("moduleID") %>/**/*.json' ]
             }
         },
-        
+
         clean: {
-			build: ['builds/<%= grunt.option("moduleID") %>/**']
-		},
+            build: ['builds/<%= grunt.option("moduleID") %>/**']
+        },
 
         copy: {
             index: {
@@ -192,9 +192,10 @@ module.exports = function(grunt) {
                 }
             },
             theme: {
-                src: 'src/theme/<%= grunt.option("theme") %>',
+                src: 'src/theme/',
                 dest: 'src/theme/theme.js',
                 options: {
+                    include: "<%= grunt.option('theme') %>",
                     baseUrl: "src",
                     moduleName: 'themes/themes'
                 }
@@ -241,7 +242,8 @@ module.exports = function(grunt) {
             },
             courseJson: {
                 files: [
-                    'src/courses/<%= grunt.option("moduleID") %>/**/*.json', '!src/courses/<%= grunt.option("moduleID") %>/config.json'
+                    'src/courses/<%= grunt.option("moduleID") %>/**/*.json',
+                    '!src/courses/<%= grunt.option("moduleID") %>/config.json'
                 ],
                 tasks : ['jsonlint', 'copy:courseJson'],
                 options: {
@@ -250,7 +252,8 @@ module.exports = function(grunt) {
             },
             configJson: {
                 files: [
-                    'src/courses/<%= grunt.option("moduleID") %>/config.json', 'src/theme/<%= grunt.option("theme") %>/theme.json',
+                    'src/courses/<%= grunt.option("moduleID") %>/config.json',
+                    'src/theme/<%= grunt.option("theme") %>/theme.json'
                 ],
                 tasks : ['jsonlint', 'create-json-config'],
                 options: {
@@ -259,7 +262,9 @@ module.exports = function(grunt) {
             },
             courseAssets: {
                 files: [
-                    'src/courses/<%= grunt.option("moduleID") %>/**/*', '!src/courses/<%= grunt.option("moduleID") %>/**/*.json', '!src/courses/<%= grunt.option("moduleID") %>/config.json'
+                    'src/courses/<%= grunt.option("moduleID") %>/**/*',
+                    '!src/courses/<%= grunt.option("moduleID") %>/**/*.json',
+                    '!src/courses/<%= grunt.option("moduleID") %>/config.json'
                 ],
                 tasks : ['copy:courseAssets'],
                 options: {
@@ -317,11 +322,11 @@ module.exports = function(grunt) {
 
         connect: {
             server: {
-              options: {
-                port: 9001,
-                base: 'builds/<%= grunt.option("moduleID") %>',
-                keepalive:true
-              }
+                options: {
+                    port: 9001,
+                    base: 'builds/<%= grunt.option("moduleID") %>',
+                    keepalive:true
+                }
             },
             spoorOffline: {
                 options: {
@@ -333,10 +338,10 @@ module.exports = function(grunt) {
         },
 
         adapt_insert_tracking_ids: {
-          options: {
-              courseFile: "src/courses/<%= grunt.option('moduleID') %>/en/course.json",
-              blocksFile: "src/courses/<%= grunt.option('moduleID') %>/en/blocks.json"
-          }
+            options: {
+                courseFile: "src/courses/<%= grunt.option('moduleID') %>/en/course.json",
+                blocksFile: "src/courses/<%= grunt.option('moduleID') %>/en/blocks.json"
+            }
         },
 
         nightwatch: {
@@ -461,6 +466,7 @@ module.exports = function(grunt) {
                         return checkIfOrphanedElementsExist(value, "blocks");
                 }
             });
+
             if (hasOrphanedParentIds) {
                 grunt.fail.fatal("Oops, looks like you have some orphaned objects: " + orphanedParentIds);
             }
@@ -550,7 +556,6 @@ module.exports = function(grunt) {
         if(!checkValidMod(moduleID)) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
 
         grunt.option("moduleID", moduleID);
-
         grunt.task.run('concurrent:' + ((!!spoor === true) ? 'spoor' : 'server'));
     });
 
@@ -580,7 +585,7 @@ module.exports = function(grunt) {
         writeln('');
         grunt.log.ok('No task specified. See below for a list of available tasks.');
         writeln('');
-        writeln('Note: tasks are listed in green, mandatory parameters are in red, and optional parameters are in blue.'.bold);
+        writeln('Note: tasks are listed in blue, mandatory parameters are in red, and optional parameters are in purple.');
         writeln('');
         writeTask('build', '', ':mod', 'Builds a production ready/minified version of the specified module. If no module ID is specified, all modules are built.');
         writeTask('dev', '', ':mod', 'Creates a developer-friendly version of the specified module (including source maps). If no module ID is specified, all modules are built.');
@@ -590,7 +595,7 @@ module.exports = function(grunt) {
         writeTask('server-scorm', ':mod', '', 'Same as server, but emulates a SCORM server to test the tracking of learner progress.');
 
         function writeTask(name, mandParams, optParams, description) {
-            writeln(name['green'].bold + mandParams['red'] + optParams['blue']);
+            writeln(name['cyan'].bold + mandParams['red'].bold + optParams['magenta']);
             writeln(description);
             writeln('');
         }
