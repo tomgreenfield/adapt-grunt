@@ -18,7 +18,7 @@ module.exports = function(grunt) {
                 src: [ 'src/courses/<%= grunt.option("moduleID") %>/**/*.json' ]
             }
         },
-        
+
         clean: {
 			build: ['builds/<%= grunt.option("moduleID") %>/**']
 		},
@@ -581,7 +581,7 @@ module.exports = function(grunt) {
         writeln('');
         grunt.log.ok('No task specified. See below for a list of available tasks.');
         writeln('');
-        writeln('Note: tasks are listed in green, mandatory parameters are in red, and optional parameters are in blue.'.bold);
+        writeln('Note: tasks are listed in blue, mandatory parameters are in red, and optional parameters are in purple.');
         writeln('');
         writeTask('build', '', ':mod', 'Builds a production ready/minified version of the specified module. If no module ID is specified, all modules are built.');
         writeTask('dev', '', ':mod', 'Creates a developer-friendly version of the specified module (including source maps). If no module ID is specified, all modules are built.');
@@ -591,7 +591,7 @@ module.exports = function(grunt) {
         writeTask('server-scorm', ':mod', '', 'Same as server, but emulates a SCORM server to test the tracking of learner progress.');
 
         function writeTask(name, mandParams, optParams, description) {
-            writeln(name['green'].bold + mandParams['red'] + optParams['blue']);
+            writeln(name['cyan'].bold + mandParams['red'].bold + optParams['magenta']);
             writeln(description);
             writeln('');
         }
