@@ -48,27 +48,6 @@ The course data for each module needs to be placed in a `courses` folder in the 
             ...
         ...
 
-**Themes**
-
-In order for multiple themes to work within a single course, there has had to be a small change to their folder structure. The theme data now needs to be nested within a `src` folder.
-
-So the following:
-
-    theme-name/
-        assets/
-        fonts/
-        js/
-        ...
-
-Becomes:
-
-    theme-name/
-        src/
-            assets/
-            fonts/
-            js/
-            ...
-
 ## Supported commands
 
 Developing a course takes place in the `adapt_framework/src/courses` folder. When you want to test or release your creation, there are a few simple commands you should be aware of.
@@ -89,6 +68,9 @@ ID is specified, all modules are built. [Note: the id passed must also be presen
     grunt dev:id
 Creates a developer-friendly version of the specified module (including source maps). Takes the module ID as a parameter. If no module ID is specified, all modules are built. If an individual module has been specified, it also runs the `spy`task for that module.
 
+    grunt spy:id
+Listens for changes to any files associated with the specified module, then performs the necessary actions to update the build.
+
     grunt tracking-insert:id
 If your course is intended use SCORM to track within a LMS, you should run this command to insert tracking identifiers. The module ID is passed as a parameter.
 
@@ -98,6 +80,8 @@ Launches a stand-alone Node.JS web server and opens the specified course in your
     grunt server-scorm:id
 Same as above, but emulates a SCORM server to test the tracking of learner progress.
 
+
+***Hint: if you forget which commands are available, you can run simply*** `grunt` ***to see a list of the supported commands (along with descriptions).***
 
 ## Creating the SCORM package
 
