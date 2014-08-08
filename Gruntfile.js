@@ -192,9 +192,10 @@ module.exports = function(grunt) {
                 }
             },
             theme: {
-                src: 'src/theme/<%= grunt.option("theme") %>',
+                src: 'src/theme/',
                 dest: 'src/theme/theme.js',
                 options: {
+					include: "<%= grunt.option('theme') %>",
                     baseUrl: "src",
                     moduleName: 'themes/themes'
                 }
