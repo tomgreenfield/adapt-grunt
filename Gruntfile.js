@@ -107,6 +107,13 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         flatten: true,
+                        src: ['src/extensions/**/assets/**'],
+                        dest: 'builds/<%= grunt.option("moduleID") %>/assets/',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
                         src: ['src/extensions/adapt-contrib-spoor/required/*'],
                         dest: 'builds/<%= grunt.option("moduleID") %>/',
                         filter: 'isFile'
@@ -296,7 +303,8 @@ module.exports = function(grunt) {
                 files: [
                     'src/theme/<%= grunt.option("theme") %>/fonts/**',
                     'src/theme/<%= grunt.option("theme") %>/assets/**',
-                    'src/components/**/assets/**'
+                    'src/components/**/assets/**',
+                    'src/extensions/**/assets/**'
                 ],
                 tasks: ['copy:main'],
                 options: {
