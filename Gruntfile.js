@@ -23,6 +23,15 @@ module.exports = function(grunt) {
             build: ['builds/<%= grunt.option("moduleID") %>/**']
         },
 
+        jshint: {
+            options: {
+                eqeqeq: false,
+                asi: true,
+                eqnull: true
+            },
+            all: ['builds/<%= grunt.option("moduleID") %>/adapt/js/adapt.min.js']
+        },
+
         copy: {
             index: {
                 files: [
@@ -520,7 +529,7 @@ module.exports = function(grunt) {
         writeln("Using theme '" + grunt.option("theme") + "'");
 
         var buildProcessRelease = ['jsonlint', 'check-json', 'clean', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config'];
-        var buildProcessDev = ['jsonlint', 'check-json', 'clean', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config'];
+        var buildProcessDev = ['jsonlint', 'check-json', 'clean', 'copy', 'jshint', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config'];
 
         grunt.task.run((!!devMode === true) ? buildProcessDev : buildProcessRelease);
     });
