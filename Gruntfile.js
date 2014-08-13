@@ -628,7 +628,7 @@ module.exports = function(grunt) {
         writeln('Note: tasks are listed in blue, mandatory parameters are in red, and optional parameters are in purple.');
         writeln('');
         writeTask('build', '', ':mod', 'Builds a production ready/minified version of the specified module. If no module ID is specified, all modules are built.');
-        writeTask('dev', '', ':mod', 'Creates a developer-friendly version of the specified module (including source maps). If no module ID is specified, all modules are built.');
+        writeTask('dev', '', ':mod', 'Creates a developer-friendly version of the specified module (including source maps). If no module ID is specified, all modules are built. Also runs jshint.');
         writeTask('spy', ':mod', '', 'Listens for changes to any files associated with the specified module, then performs the necessary actions to update the build.');
         writeTask('tracking-insert', '', ':mod', 'Inserts tracking identifiers (used in conjunction with SCORM). If no module ID is specified, tracking IDs are added for all modules.');
         writeTask('server', ':mod', '', 'Launches a stand-alone Node.JS web server and opens the specified course in your default web browser.');
