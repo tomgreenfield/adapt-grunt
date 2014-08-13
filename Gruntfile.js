@@ -25,11 +25,34 @@ module.exports = function(grunt) {
 
         jshint: {
             options: {
+                maxerr: 100,
+                reporter: require('jshint-stylish'),
+                force: true,
                 eqeqeq: false,
+                freeze: true,
+                undef: true,
                 asi: true,
-                eqnull: true
+                eqnull: true,
+                sub: true,
+                expr: true,
+                boss: true,
+                laxbreak: true,
+                browser: true,
+                jquery: true,
+                predef: ["define"],
+                globals: {
+                    "console": false,
+                    "_": false,
+                    "Backbone": false,
+                    "Handlebars": false,
+                    "Modernizr": false,
+                }
             },
-            all: ['builds/<%= grunt.option("moduleID") %>/adapt/js/adapt.min.js']
+            core: ['src/core/**/*.js', '!src/core/js/libraries/*.js'],
+            menu: ['src/menu/**/js/*.js'],
+            theme: ['src/theme/**/js/*.js'],
+            extensions: ['src/extensions/**/js/*.js'],
+            components: ['src/components/**/js/*.js']
         },
 
         copy: {
@@ -529,7 +552,7 @@ module.exports = function(grunt) {
         writeln("Using theme '" + grunt.option("theme") + "'");
 
         var buildProcessRelease = ['jsonlint', 'check-json', 'clean', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config'];
-        var buildProcessDev = ['jsonlint', 'check-json', 'clean', 'copy', 'jshint', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config'];
+        var buildProcessDev = ['jshint', 'jsonlint', 'check-json', 'clean', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config'];
 
         grunt.task.run((!!devMode === true) ? buildProcessDev : buildProcessRelease);
     });
