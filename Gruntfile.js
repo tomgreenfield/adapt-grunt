@@ -505,7 +505,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('_build', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID, devMode) {
-        if(!checkValidMod(moduleID)) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
+        checkValidMod(moduleID);
 
         // use custom or default theme depending on grunt_config
         var customTheme = config.themes.custom[moduleID];
@@ -546,8 +546,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('spy', '', function(moduleID) {
-        if(!moduleID) grunt.fail.fatal("No module specified...");
-        if(!checkValidMod(moduleID)) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
+        checkValidMod(moduleID);
 
         // use custom or default theme depending on grunt_config
         var customTheme = config.themes.custom[moduleID];
@@ -560,8 +559,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('server', '', function(moduleID, spoor) {
-        if(!moduleID) grunt.fail.fatal("No module specified...");
-        if(!checkValidMod(moduleID)) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
+        checkValidMod(moduleID);
 
         grunt.option("moduleID", moduleID);
         grunt.task.run('concurrent:' + ((!!spoor === true) ? 'spoor' : 'server'));
@@ -572,6 +570,8 @@ module.exports = function(grunt) {
     });
 
     function checkValidMod(id) {
+		if (!id) grunt.fail.fatal("No module specified...");
+	
         var mods = config.modules;
         var exists = false;
         for (var i = 0; i < mods.length; i++) {
@@ -580,7 +580,7 @@ module.exports = function(grunt) {
                 break;
             }
         }
-        return exists;
+        if(!exists) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
     };
 
     // shorthand, wraps text
