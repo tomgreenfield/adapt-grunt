@@ -489,7 +489,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jsonlint');
     grunt.loadNpmTasks('grunt-contrib-clean');
 
-    grunt.registerTask('_tracking-insert', '', function(moduleID) {
+    grunt.registerTask('_tracking-insert', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID) {
         grunt.option("moduleID", moduleID);
         grunt.task.run('adapt_insert_tracking_ids');
     });
@@ -504,8 +504,8 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('_build', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID, devMode) {
-        checkValidMod(moduleID);
+    grunt.registerTask('_build', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID, devMode) {		
+		checkValidMod(moduleID);
 
         // use custom or default theme depending on grunt_config
         var customTheme = config.themes.custom[moduleID];
@@ -587,8 +587,6 @@ module.exports = function(grunt) {
     // shorthand, wraps text
     function writeln(msg) { grunt.log.writeln(grunt.log.wraptext(80, msg)); }
 
-    var colors = ['white', 'black', 'grey', 'blue', 'cyan', 'green', 'magenta', 'red', 'yellow', 'rainbow'];
-
     grunt.registerTask('default', '', function(moduleID) {
         var width = 80;
         writeln('');
@@ -603,6 +601,8 @@ module.exports = function(grunt) {
         writeTask('server', ':mod', '', 'Launches a stand-alone Node.JS web server and opens the specified course in your default web browser.');
         writeTask('server-scorm', ':mod', '', 'Same as server, but emulates a SCORM server to test the tracking of learner progress.');
 
+		// FYI: colors = 'white', 'black', 'grey', 'blue', 'cyan', 
+		//				 'green', 'magenta', 'red', 'yellow', 'rainbow'
         function writeTask(name, mandParams, optParams, description) {
             writeln(name['cyan'].bold + mandParams['red'].bold + optParams['magenta']);
             writeln(description);
