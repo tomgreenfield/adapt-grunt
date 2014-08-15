@@ -486,9 +486,6 @@ module.exports = function(grunt) {
     //grunt.registerTask('acceptance',['compile', 'concurrent:selenium']);
 
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
-    grunt.loadNpmTasks('grunt-jsonlint');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-
     grunt.registerTask('_tracking-insert', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID) {
         grunt.option("moduleID", moduleID);
         grunt.task.run('adapt_insert_tracking_ids');
@@ -504,7 +501,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('_build', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID, devMode) {		
+    grunt.registerTask('_build', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID, devMode) {
 		checkValidMod(moduleID);
 
         // use custom or default theme depending on grunt_config
@@ -571,7 +568,7 @@ module.exports = function(grunt) {
 
     function checkValidMod(id) {
 		if (!id) grunt.fatal("No module specified...");
-	
+
         var mods = config.modules;
         var exists = false;
         for (var i = 0; i < mods.length; i++) {
@@ -580,7 +577,7 @@ module.exports = function(grunt) {
                 break;
             }
         }
-		
+
         if(!exists) grunt.fatal("'" + id + "' not specified in grunt_config.json. Try again...");
     };
 
@@ -601,7 +598,7 @@ module.exports = function(grunt) {
         writeTask('server', ':mod', '', 'Launches a stand-alone Node.JS web server and opens the specified course in your default web browser.');
         writeTask('server-scorm', ':mod', '', 'Same as server, but emulates a SCORM server to test the tracking of learner progress.');
 
-		// FYI: colors = 'white', 'black', 'grey', 'blue', 'cyan', 
+		// FYI: colors = 'white', 'black', 'grey', 'blue', 'cyan',
 		//				 'green', 'magenta', 'red', 'yellow', 'rainbow'
         function writeTask(name, mandParams, optParams, description) {
             writeln(name['cyan'].bold + mandParams['red'].bold + optParams['magenta']);
