@@ -570,7 +570,7 @@ module.exports = function(grunt) {
     });
 
     function checkValidMod(id) {
-		if (!id) grunt.fail.fatal("No module specified...");
+		if (!id) grunt.fatal("No module specified...");
 	
         var mods = config.modules;
         var exists = false;
@@ -580,7 +580,8 @@ module.exports = function(grunt) {
                 break;
             }
         }
-        if(!exists) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
+		
+        if(!exists) grunt.fatal("'" + id + "' not specified in grunt_config.json. Try again...");
     };
 
     // shorthand, wraps text
