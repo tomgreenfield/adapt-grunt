@@ -7,7 +7,6 @@ One major difference with our internal grunt build process is the addition of a 
 See below for an annotated example:
 
     {
-        // a list of all modules (any modules not specified here will not be built)
         "modules": [
       	    "m05",
       	    "m10",
@@ -38,7 +37,7 @@ As there can now be multiple modules/builds per course, the `build` folder has n
 
 **Course data**
 
-The course data for each module needs to be placed in a `courses` folder in the `src` for the project. Each course then needs to be named with it's module id (to correspond with the list in `grunt_config.json`). For example:
+The course data for each module needs to be placed in a `courses` folder in the `src` for the project. Each course then needs to be named with its module ID. For example:
 
     src/
         courses/
@@ -63,7 +62,7 @@ Simply running `grunt` will list out the available tasks, along with colour code
 
     grunt build:id
 Builds a production ready/minified version of the specified module. Takes the module ID as a parameter. If no module
-ID is specified, all modules are built. [Note: the id passed must also be present in the `grunt_config.json` or that module will not be built].
+ID is specified, all modules are built.
 
     grunt dev:id
 Creates a developer-friendly version of the specified module (including source maps). Takes the module ID as a parameter. If no module ID is specified, all modules are built. If an individual module has been specified, it also runs the `spy`task for that module.

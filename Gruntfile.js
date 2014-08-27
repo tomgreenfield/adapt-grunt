@@ -545,18 +545,8 @@ module.exports = function(grunt) {
     });
 
     function checkValidMod(id) {
-		if (!id) grunt.fatal("No module specified...");
-
-        var mods = config.modules;
-        var exists = false;
-        for (var i = 0; i < mods.length; i++) {
-            if(mods[i] === id) {
-                exists = true;
-                break;
-            }
-        }
-
-        if(!exists) grunt.fatal("'" + id + "' not specified in grunt_config.json. Try again...");
+        if (!id) grunt.fatal("No module specified...");
+        if (!grunt.file.exists("src/courses", id)) grunt.fatal("'" + id + "' directory not found. Try again...");
     };
 
     // shorthand, wraps text
