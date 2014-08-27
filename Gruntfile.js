@@ -358,6 +358,34 @@ module.exports = function(grunt) {
                 jar_url: 'http://selenium-release.storage.googleapis.com/2.40/selenium-server-standalone-2.40.0.jar'
             }
         },
+
+        compress: {
+            main: {
+                options: {
+                    archive: function() {
+                        var date = grunt.template.today("yymmdd");
+                        var project = grunt.config("svninfo.repository.root").split("svn/").pop();
+                        var module = grunt.option("moduleID");
+                        var revision = "r" + grunt.config("svninfo.rev");
+
+                        return [date, project, module, revision].join("_") + ".zip";
+                    }
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: "builds/<%= grunt.option('moduleID') %>/",
+                        src: ["**"]
+                    }
+                ]
+            }
+        },
+
+        svninfo: {
+            options: {
+                cwd: "builds/<%= grunt.option('moduleID') %>/"
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -544,6 +572,12 @@ module.exports = function(grunt) {
         grunt.task.run('server:' + moduleID + ':true');
     });
 
+    grunt.registerTask("zip", "Compresses build of specified module.", function(moduleID) {
+        checkValidMod(moduleID);
+        grunt.option("moduleID", moduleID);
+        grunt.task.run("svninfo", "compress");
+    });
+
     function checkValidMod(id) {
 		if (!id) grunt.fatal("No module specified...");
 
@@ -574,6 +608,7 @@ module.exports = function(grunt) {
         writeTask('tracking-insert', '', ':mod', 'Inserts tracking identifiers (used in conjunction with SCORM). If no module ID is specified, tracking IDs are added for all modules.');
         writeTask('server', ':mod', '', 'Launches a stand-alone Node.JS web server and opens the specified course in your default web browser.');
         writeTask('server-scorm', ':mod', '', 'Same as server, but emulates a SCORM server to test the tracking of learner progress.');
+        writeTask("zip", ":mod", "", "Compresses build of specified module.");
 
 		// FYI: colors = 'white', 'black', 'grey', 'blue', 'cyan',
 		//				 'green', 'magenta', 'red', 'yellow', 'rainbow'

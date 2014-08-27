@@ -80,6 +80,8 @@ Launches a stand-alone Node.JS web server and opens the specified course in your
     grunt server-scorm:id
 Same as above, but emulates a SCORM server to test the tracking of learner progress.
 
+    grunt zip:id
+Compresses build of specified module. Outputted is a zip with the following naming convention: *reverseDate_projectCode_moduleID_revisionNumber*. Requires [command line client tools](http://i.stack.imgur.com/LMswf.png) to be checked when installing TortoiseSVN on Windows.
 
 ***Hint: if you forget which commands are available, you can run simply*** `grunt` ***to see a list of the supported commands (along with descriptions).***
 
