@@ -513,14 +513,15 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('dev', '', function(moduleID) {
-        if(moduleID) grunt.task.run(['_build:' + moduleID + ":true", "watch"]);
+        if(moduleID) grunt.task.run(['_build:' + moduleID + ":true", "watch:" + moduleID]);
         else {
             var mods = config.modules;
             for (var i = 0; i < mods.length; i++) grunt.task.run('_build:' + mods[i] + ":true");
         }
     });
 
-    grunt.registerTask('spy', '', function(moduleID) {
+    grunt.renameTask("watch", "contrib-watch");
+    grunt.registerTask("watch", "", function(moduleID) {
         checkValidMod(moduleID);
 
         // use custom or default theme depending on grunt_config
@@ -530,7 +531,8 @@ module.exports = function(grunt) {
         grunt.option("moduleID", moduleID);
         grunt.option("theme", theme);
 
-        grunt.task.run('watch');
+        grunt.renameTask("contrib-watch", "watch");
+        grunt.task.run("watch");
     });
 
     grunt.registerTask('server', '', function(moduleID, spoor) {
@@ -570,7 +572,7 @@ module.exports = function(grunt) {
         writeln('');
         writeTask('build', '', ':mod', 'Builds a production ready/minified version of the specified module. If no module ID is specified, all modules are built.');
         writeTask('dev', '', ':mod', 'Creates a developer-friendly version of the specified module (including source maps). If no module ID is specified, all modules are built.');
-        writeTask('spy', ':mod', '', 'Listens for changes to any files associated with the specified module, then performs the necessary actions to update the build.');
+        writeTask('watch', ':mod', '', 'Listens for changes to any files associated with the specified module, then performs the necessary actions to update the build.');
         writeTask('tracking-insert', '', ':mod', 'Inserts tracking identifiers (used in conjunction with SCORM). If no module ID is specified, tracking IDs are added for all modules.');
         writeTask('server', ':mod', '', 'Launches a stand-alone Node.JS web server and opens the specified course in your default web browser.');
         writeTask('server-scorm', ':mod', '', 'Same as server, but emulates a SCORM server to test the tracking of learner progress.');

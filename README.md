@@ -66,9 +66,9 @@ Builds a production ready/minified version of the specified module. Takes the mo
 ID is specified, all modules are built. [Note: the id passed must also be present in the `grunt_config.json` or that module will not be built].
 
     grunt dev:id
-Creates a developer-friendly version of the specified module (including source maps). Takes the module ID as a parameter. If no module ID is specified, all modules are built. If an individual module has been specified, it also runs the `spy`task for that module.
+Creates a developer-friendly version of the specified module (including source maps). Takes the module ID as a parameter. If no module ID is specified, all modules are built. If an individual module has been specified, it also runs the `watch`task for that module.
 
-    grunt spy:id
+    grunt watch:id
 Listens for changes to any files associated with the specified module, then performs the necessary actions to update the build.
 
     grunt tracking-insert:id
