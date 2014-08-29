@@ -399,7 +399,7 @@ module.exports = function(grunt) {
         function checkJsonIds() {
             var currentCourseFolder;
             // Go through each course folder inside the src/course directory
-            grunt.file.expand({filter: "isDirectory"}, "src/course/*").forEach(function(path) {
+            grunt.file.expand({filter: "isDirectory"}, "src/courses" + grunt.option("moduleID") + "/*").forEach(function(path) {
                 // Stored current path of folder - used later to read .json files
                 currentCourseFolder = path;
                 // Go through each list of declared course files
