@@ -472,15 +472,16 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
     grunt.registerTask('_tracking-insert', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID) {
+        checkValidMod(moduleID);
         grunt.option("moduleID", moduleID);
         grunt.task.run('adapt_insert_tracking_ids');
     });
 
-    grunt.registerTask('tracking-insert', '', function(moduleID) {
-        if(moduleID) grunt.task.run('_tracking-insert:' + moduleID);
-        else {
-            var mods = config.modules;
-            for (var i = 0; i < mods.length; i++) grunt.task.run('_tracking-insert:' + mods[i]);
+    grunt.registerTask("tracking-insert", "", function(moduleID) {
+        if (moduleID) {
+            grunt.task.run('_tracking-insert:' + moduleID);
+        } else {
+            gruntAllMods("_tracking-insert");
         }
     });
 
@@ -504,19 +505,19 @@ module.exports = function(grunt) {
         grunt.task.run((!!devMode === true) ? buildProcessDev : buildProcessRelease);
     });
 
-    grunt.registerTask('build', '', function(moduleID, devMode) {
-        if(moduleID) grunt.task.run('_build:' + moduleID + ':false');
-        else {
-            var mods = config.modules;
-            for (var i = 0; i < mods.length; i++) grunt.task.run('_build:' + mods[i] + ':false');
+    grunt.registerTask("build", "", function(moduleID) {
+        if (moduleID) {
+            grunt.task.run("_build:" + moduleID + ":false");
+        } else {
+            gruntAllMods("_build", ":false");
         }
     });
 
-    grunt.registerTask('dev', '', function(moduleID) {
-        if(moduleID) grunt.task.run(['_build:' + moduleID + ":true", "watch"]);
-        else {
-            var mods = config.modules;
-            for (var i = 0; i < mods.length; i++) grunt.task.run('_build:' + mods[i] + ":true");
+    grunt.registerTask("dev", "", function(moduleID) {
+        if (moduleID) {
+            grunt.task.run(["_build:" + moduleID + ":true", "watch"]);
+        } else {
+            gruntAllMods("_build", ":true");
         }
     });
 
@@ -547,6 +548,13 @@ module.exports = function(grunt) {
     function checkValidMod(id) {
         if (!id) grunt.fatal("No module specified...");
         if (!grunt.file.exists("src/courses", id)) grunt.fatal("'" + id + "' directory not found. Try again...");
+    };
+
+    function gruntAllMods(task, suffix) {
+        if (typeof suffix === "undefined") suffix = "";
+        grunt.file.expand({ filter: "isDirectory", cwd: "src/courses/" }, "*").forEach(function(moduleID) {
+            grunt.task.run(task + ":" + moduleID + suffix);
+        });
     };
 
     // shorthand, wraps text

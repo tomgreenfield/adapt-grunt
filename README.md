@@ -71,7 +71,7 @@ Creates a developer-friendly version of the specified module (including source m
 Listens for changes to any files associated with the specified module, then performs the necessary actions to update the build.
 
     grunt tracking-insert:id
-If your course is intended use SCORM to track within a LMS, you should run this command to insert tracking identifiers. The module ID is passed as a parameter.
+If your course is intended use SCORM to track within a LMS, you should run this command to insert tracking identifiers. The module ID is passed as a parameter. If no module ID is specified, tracking IDs are added to all modules.
 
     grunt server:id
 Launches a stand-alone Node.JS web server and opens the specified course in your default web browser.
